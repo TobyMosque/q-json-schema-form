@@ -1,11 +1,21 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <dynamic-form
-      :properties="properties"
-      :defs="defs"
-      v-model="model"
-    ></dynamic-form>
-    <q-markdown :src="code"></q-markdown>
+    <fieldset>
+      <legend>Dynamic Form</legend>
+      <dynamic-form
+        :properties="properties"
+        :defs="defs"
+        v-model="model"
+      ></dynamic-form>
+    </fieldset>
+    <fieldset>
+      <legend>Output</legend>
+      <q-markdown :src="mdCode"></q-markdown>
+    </fieldset>
+    <fieldset>
+      <legend>Schema</legend>
+      <q-markdown :src="mdSchema"></q-markdown>
+    </fieldset>
   </q-page>
 </template>
 
@@ -19,12 +29,17 @@ export default defineComponent({
     const properties = ref(schema.properties);
     const defs = ref(schema.$defs);
     const model = ref({});
-    const code = computed(() => {
+    const mdCode = computed(() => {
       return `\`\`\`json
 ${JSON.stringify(model.value, null, 2)}
 \`\`\``;
     });
-    return { properties, defs, model, code };
+    const mdSchema = computed(() => {
+      return `\`\`\`json
+${JSON.stringify(schema, null, 2)}
+\`\`\``;
+    });
+    return { properties, defs, model, mdCode, mdSchema };
   },
 });
 </script>

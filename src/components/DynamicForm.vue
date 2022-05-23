@@ -1,22 +1,24 @@
 <template>
-  <template v-for="(property, name) in _properties" :key="name">
-    <template v-if="property.type === 'array'">
-      <dynamic-items
-        :items="property.items"
-        :defs="_defs"
-        :name="name"
-        v-model="_model[name]"
-      ></dynamic-items>
+  <div class="q-gutter-sm">
+    <template v-for="(property, name) in _properties" :key="name">
+      <template v-if="property.type === 'array'">
+        <dynamic-items
+          :items="property.items"
+          :defs="_defs"
+          :name="name"
+          v-model="_model[name]"
+        ></dynamic-items>
+      </template>
+      <template v-else>
+        <dynamic-item
+          :type="property.type"
+          :label="name"
+          :name="name"
+          v-model="_model[name]"
+        ></dynamic-item>
+      </template>
     </template>
-    <template v-else>
-      <dynamic-item
-        :type="property.type"
-        :label="name"
-        :name="name"
-        v-model="_model[name]"
-      ></dynamic-item>
-    </template>
-  </template>
+  </div>
 </template>
 
 <script lang="ts">
